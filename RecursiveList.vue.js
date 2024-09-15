@@ -73,7 +73,14 @@ Vue.component("RecursiveList", {
   },
   computed: {
     children() {
-      return this.items.filter((item) => item.parentId === this.item.id);
+      if (this.item.isOptionGroup) {
+        return this.items.filter(
+          (item) =>
+            item.optionGroupId === this.item.id && item.parentId === null
+        );
+      } else {
+        return this.items.filter((item) => item.parentId === this.item.id);
+      }
     },
     hasChildren() {
       return this.children.length;
