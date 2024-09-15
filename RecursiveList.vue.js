@@ -10,7 +10,9 @@ Vue.component("RecursiveList", {
               <v-icon @click.prevent="handleExpand(item.id)">
                 {{item.isExpanded ?  'mdi-menu-down' : 'mdi-menu-right'}}
               </v-icon>
-              <v-icon class="pl-4">mdi-folder</v-icon>
+              <v-icon class="pl-4">
+                {{item.isExpanded ? 'mdi-folder-open' : 'mdi-folder'}}
+              </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>
@@ -23,19 +25,21 @@ Vue.component("RecursiveList", {
               </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <template 
-            v-if="hasChildren && item.isExpanded"
-          >
-            <recursive-list 
-              v-for="child in children"
-              :key="child.id"
-              :item="child"
-              :items="items"
-              :paddingScalar="paddingScalar + 1"
-              @expand="handleExpand"
+          <v-expand-transition>
+            <div 
+              v-show="hasChildren && item.isExpanded"
             >
-            </recursive-list>
-          </template>
+              <recursive-list 
+                v-for="child in children"
+                :key="child.id"
+                :item="child"
+                :items="items"
+                :paddingScalar="paddingScalar + 1"
+                @expand="handleExpand"
+              >
+              </recursive-list>
+            </div>
+          </v-expand-transition>
         </template>
       </div>
   `,
@@ -47,6 +51,10 @@ Vue.component("RecursiveList", {
     items: {
       type: Array,
       default: [],
+    },
+    parentId: {
+      type: Number,
+      default: null,
     },
     paddingScalar: {
       type: Number,
