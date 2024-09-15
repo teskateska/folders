@@ -34,11 +34,11 @@ Vue.component("parent", {
       selectedItem: 4,
       combinedItems: [],
       optionGroups: [
-        {
-          //          optionGroupId: 2222,
-          //          name: "option grp",
-          //          category: "option group",
-        },
+        //{
+        //          optionGroupId: 2222,
+        //          name: "option grp",
+        //          category: "option group",
+        //},
       ],
       items: [
         {
